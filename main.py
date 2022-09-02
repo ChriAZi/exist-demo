@@ -1,37 +1,90 @@
+import time
+
 import streamlit as st
-import pandas as pd
-import numpy as np
 
-st.title('Trail.ai')
+from tabs.analysis_tab import render_analysis_tab
+from tabs.demo_tab import render_demo_tab
+from tabs.integrations_tab import render_integrations_tab
+from tabs.performance_tab import render_performance_tab
+from tabs.run_tab import render_run_tab
+from tabs.shap_tab import render_shap_tab
 
-DATE_COLUMN = 'date/time'
-DATA_URL = ('https://s3-us-west-2.amazonaws.com/'
-            'streamlit-demo-data/uber-raw-data-sep14.csv.gz')
+show_run_button = 'show_run_button'
+show_model_card = 'show_model_card'
+last_accuracy = 'last_accuracy'
+last_precision = 'last_precision'
+last_f1 = 'last_f1'
+if show_run_button not in st.session_state:
+    st.session_state[show_run_button] = True
+if show_model_card not in st.session_state:
+    st.session_state[show_model_card] = False
+if last_accuracy not in st.session_state:
+    st.session_state[last_accuracy] = 0
+if last_precision not in st.session_state:
+    st.session_state[last_precision] = 0
+if last_f1 not in st.session_state:
+    st.session_state[last_f1] = 0
 
-@st.cache
-def load_data(nrows):
-    data = pd.read_csv(DATA_URL, nrows=nrows)
-    lowercase = lambda x: str(x).lower()
-    data.rename(lowercase, axis='columns', inplace=True)
-    data[DATE_COLUMN] = pd.to_datetime(data[DATE_COLUMN])
-    return data
+st.title('Trail EXIST Demo')
 
+st.subheader('Instructions')
+st.markdown(
+    """This demo guides you through the process of training, tracking and evaluating the run of a model training 
+    using **Trail**. You can navigate through the demo by following the prompts further down the page. If you want 
+    to reset the demo, you can use the **Rerun**-Button on the top right or just press `R` on your keyboard. """
+)
 
-data_load_state = st.text('Loading data...')
-data = load_data(10000)
-data_load_state.text("Done! (using st.cache)")
+st.subheader('Use Case')
+st.markdown(
+    """Imagine you want to build an AI system that can classify the survival chance of a passenger in the 
+    **infamous Titanic crash**. To do so, you have already: """
+)
+st.markdown(
+    """1. **integrated Trail** into your code base using `import trail` 
+    \n2. **tracked two experiment runs** using `trail.autotrack()`
+    \n3. and evaluated the first run results in the **Trail UI** (seen in the image below)"""
+)
 
-if st.checkbox('Show raw data'):
-    st.subheader('Raw data')
-    st.write(data)
+st.subheader('Next Steps')
+st.markdown(
+    """You are now ready to further improve your model and test your new hypothesis. As a seasoned 
+    data scientist, you know that you now need to run your training script, so Trail can **log all relevant 
+    metrics**. ***Good thing is:*** we have all things already setup for you, so that you can inspect the Trail 
+    experience by just using the prompts below."""
+)
+st.image('https://i.ibb.co/vXYsNZB/Expriment-Overview.jpg', caption='Trail Tree View', use_column_width="always")
+st.markdown('If you are ready to go, click the **Run Experiment**-Button below.')
 
-st.subheader('Number of pickups by hour')
-hist_values = np.histogram(data[DATE_COLUMN].dt.hour, bins=24, range=(0, 24))[0]
-st.bar_chart(hist_values)
+if st.button('Run experiment'):
+    with st.spinner('Running experiment..'):
+        time.sleep(2)
+    st.session_state[show_model_card] = True
 
-# Some number in the range 0-23
-hour_to_filter = st.slider('hour', 0, 23, 17)
-filtered_data = data[data[DATE_COLUMN].dt.hour == hour_to_filter]
+if st.session_state[show_model_card]:
+    st.subheader('Trail Card')
+    st.write(
+        """Below you can see all information of the last experiment run that is relevant for deciding on how to 
+        further improve your model. Each section includes different information addressing different aspects of the 
+        model. This information will be shown right next to the selected node from the Trail tree view as 
+        seen in our design prototype screenshots in our next product iteration. """
+    )
 
-st.subheader('Map of all pickups at %s:00' % hour_to_filter)
-st.map(filtered_data)
+    run_tab, performance_tab, shap_tab, demo_tab, analysis_tab, integration_tab = \
+        st.tabs(["👟 Input information",
+                 "📊 Model performance",
+                 "🔍 Explainability",
+                 "🦾 Demo space",
+                 "🧑‍🔬 Analysis",
+                 "🧩 Integrations"])
+    with run_tab:
+        render_run_tab()
+    with performance_tab:
+        render_performance_tab()
+    with shap_tab:
+        render_shap_tab()
+    with demo_tab:
+        render_demo_tab()
+    with analysis_tab:
+        render_analysis_tab()
+    with integration_tab:
+        render_integrations_tab()
