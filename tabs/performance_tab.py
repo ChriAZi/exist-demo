@@ -1,6 +1,6 @@
 import streamlit as st
 
-from plots.performance_plots import render_metrics
+from plots.performance_plots import render_tabs, render_confusion_matrix
 
 
 def render_performance_tab():
@@ -11,4 +11,5 @@ def render_performance_tab():
         )
         st.markdown('**Information source:** automatically tracked using `trail.autotrack()`')
     st.markdown('**Modelarchitecture:** Random-Forest-Classifier')
-    render_metrics()
+    render_tabs()
+    render_confusion_matrix()

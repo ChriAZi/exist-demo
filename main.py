@@ -8,6 +8,9 @@ from tabs.integrations_tab import render_integrations_tab
 from tabs.performance_tab import render_performance_tab
 from tabs.run_tab import render_run_tab
 from tabs.shap_tab import render_shap_tab
+from train_model import train_model
+
+st.set_option('deprecation.showPyplotGlobalUse', False)
 
 show_run_button = 'show_run_button'
 show_model_card = 'show_model_card'
@@ -57,6 +60,7 @@ st.markdown('If you are ready to go, click the **Run Experiment**-Button below.'
 
 if st.button('Run experiment'):
     with st.spinner('Running experiment..'):
+        train_model()
         time.sleep(2)
     st.session_state[show_model_card] = True
 

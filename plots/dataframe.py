@@ -14,5 +14,5 @@ def get_df_cleaned(extra_cols=False):
     df_cleaned['SurvivedText'].loc[df_cleaned['SurvivedText'] == 0] = 'Died'
     df_cleaned['SurvivedText'].loc[df_cleaned['SurvivedText'] == 1] = 'Survived'
     if not extra_cols:
-        df_cleaned = df_cleaned.drop(['Age', 'Sex', 'SurvivedText'], axis=1)
+        df_cleaned = df_cleaned.drop(['PassengerId', 'Age', 'Sex', 'SurvivedText'], axis=1)
     return df_cleaned
