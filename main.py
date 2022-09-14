@@ -34,7 +34,7 @@ if current_survival_prediction not in st.session_state:
 if show_prediction not in st.session_state:
     st.session_state[show_prediction] = False
 
-st.title('Trail EXIST Demo')
+st.title('Trail Demo')
 
 st.subheader('Instructions')
 st.markdown(
