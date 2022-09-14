@@ -17,6 +17,8 @@ show_model_card = 'show_model_card'
 last_accuracy = 'last_accuracy'
 last_precision = 'last_precision'
 last_f1 = 'last_f1'
+current_survival_prediction = 'current_survival_prediction'
+show_prediction = 'show_prediction'
 if show_run_button not in st.session_state:
     st.session_state[show_run_button] = True
 if show_model_card not in st.session_state:
@@ -27,6 +29,10 @@ if last_precision not in st.session_state:
     st.session_state[last_precision] = 0
 if last_f1 not in st.session_state:
     st.session_state[last_f1] = 0
+if current_survival_prediction not in st.session_state:
+    st.session_state[current_survival_prediction] = 0
+if show_prediction not in st.session_state:
+    st.session_state[show_prediction] = False
 
 st.title('Trail EXIST Demo')
 
@@ -72,6 +78,10 @@ if st.session_state[show_model_card]:
         model. This information will be shown right next to the selected node from the Trail tree view as 
         seen in our design prototype screenshots in our next product iteration. """
     )
+
+    st.info('If you click on a button inside a tab, the app will reload and show the first tab. '
+            'This, unfortunately, cannot be fixed as its a bug of the underlying framework of this app. '
+            'To inspect the changes in your previously selected tab, simply click on it again.')
 
     run_tab, performance_tab, shap_tab, demo_tab, analysis_tab, integration_tab = \
         st.tabs(["👟 Input information",

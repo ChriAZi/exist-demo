@@ -2,7 +2,7 @@ import streamlit as st
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 
-def render_tabs():
+def render_metrics():
     accuracy = round(st.session_state['current_accuracy'] * 100, 2)
     precision = round(st.session_state['current_precision'] * 100, 2)
     f1 = round(st.session_state['current_f1'] * 100, 2)

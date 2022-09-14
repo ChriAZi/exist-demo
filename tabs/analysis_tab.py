@@ -20,7 +20,5 @@ def render_analysis_tab():
         st.text_area(label='Limitations',
                      placeholder='Here goes all information about potential limitations of your model. It might '
                                  'be that it performs very well but only on a sub population of your dataset. ')
-        submitted = st.form_submit_button("Save analysis")
-        if submitted:
+        if st.form_submit_button("Save analysis"):
             st.success('Successfully saved your analysis.')
-            st.balloons()
