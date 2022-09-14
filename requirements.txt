@@ -91,6 +91,7 @@ semver==2.13.0
 Send2Trash==1.8.0
 setuptools==63.4.1
 six==1.16.0
+shap~=0.39.0
 smmap==5.0.0
 soupsieve==2.3.1
 stack-data==0.2.0
@@ -113,5 +114,3 @@ webencodings==0.5.1
 wheel==0.37.1
 widgetsnbextension==3.5.2
 zipp==3.8.1
-
-shap~=0.39.0
