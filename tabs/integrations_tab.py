@@ -8,7 +8,7 @@ def render_integrations_tab():
             exporting of information to technical and non-technical tools used for issue management, 
             code versioning, documentation and collaboration. """
         )
-    jira, github, confluence, slack, pdf = st.columns(5)
+    jira, github, confluence, slack = st.columns(4)
     with jira:
         st.image('https://cdn.icon-icons.com/icons2/2699/PNG/512/atlassian_jira_logo_icon_170511.png',
                  width=50)
@@ -29,5 +29,3 @@ def render_integrations_tab():
                  width=50)
         link = '[Share experiment run on Slack](https://slack.com/intl/de-de/)'
         st.markdown(link, unsafe_allow_html=True)
-    with pdf:
-        st.button('Export model card as PDF')
